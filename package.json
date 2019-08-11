@@ -1,0 +1,11 @@
+{
+  "name": "learning-ai",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:MarcelLZ/learning-ai.git",
+  "author": "Marcel Zanluca <marcel.zanluca@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "numjs": "^0.16.0"
+  }
+}
