@@ -15,7 +15,7 @@ const inputs = [[0, 0], [0, 1], [1, 0], [1, 1]];
 const answers = [0, 0, 0, 1];
 
 // Weights
-let weights = [0.0, 0.0];
+let weights = [0, 0];
 
 // Used to increase weights.
 const LEARNING_RATE = 0.1;
@@ -32,29 +32,28 @@ function stepFunction(value) {
 }
 
 // Train NN!!
-function train(inputs, weights, answers, totalError) {
-  if (totalError !== 0) {
-    const brainData = answers.reduce((data, answer, a) => {
+function train() {
+  let totalError = 1;
+  while (totalError !== 0) {
+    totalError = 0;
+
+    for (let a = 0; a < answers.length; a++) {
       const output = calculate(inputs[a], weights);
-      const error = answer - output;
+      const error = answers[a] - output;
+      totalError += error;
 
-      // To ajust weights
-      const newWeights = weights.map((weight, w) => {
-        return weight + LEARNING_RATE * inputs[a][w] * error;
-      });
-
-      return {
-        totalErrors: (data.totalErrors || 0) + error,
-        weights: newWeights
-      };
-    }, {});
-
-    train(inputs, brainData.weights, answers, brainData.totalErrors);
-  } else {
-    console.log("Ajusted weights:", weights);
+      console.log();
+      console.log("--- WEIGHTS ---");
+      for (let w = 0; w < weights.length; w++) {
+        weights[w] = weights[w] + LEARNING_RATE * inputs[a][w] * error;
+        console.log("W" + w + ":", weights[w]);
+      }
+      console.log("--- / ---");
+    }
   }
+
+  console.log("Ajusted weights:", weights);
 }
 
 // Running!
-const initialErrorRate = 1;
-train(inputs, weights, answers, initialErrorRate);
+train();
